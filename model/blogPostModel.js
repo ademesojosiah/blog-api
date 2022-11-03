@@ -10,9 +10,13 @@ const blogPostSchema = new mongoose.Schema({
     author:{type:String,
         ref:'User'
     },
+    createdBy:{
+        type:mongoose.Types.ObjectId,
+        ref:"User"
+    },
     state:{
         type:String,
-        enum:["draft","Published"],
+        enum:["draft","published"],
         default: 'draft'
     },
     read_count:Number,

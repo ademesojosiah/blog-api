@@ -14,7 +14,7 @@ passport.use(
     },
     async (token, done) => {
       try {
-        return done(null, token.user);
+        return done(null, token);
       } catch (error) {
         done(error);
       }
@@ -35,8 +35,8 @@ passport.use(
         try {
             const body = req.body
             const user = await userModel.create({ ...body });
-            user.token = user.CreateJwt()
-            return done(null, user, {message: 'account succesfully created'});
+            const token = user.CreateJwt()
+            return done(null, {user,token:token}, {message: 'account succesfully created'});
         } catch (error) {
             done(error);
         }
@@ -51,20 +51,21 @@ passport.use(
            usernameField: 'email',
            passwordField: 'password'
         },
-        async (username,password,done)=>{
+        async (email,password,done)=>{
             try {
-                const user = await userModel.findOne({username})
+                const user = await userModel.findOne({email})
                 if(!user){
                     const error = new UnAuthorisedError('user not found')
                     return done(error)
                 }
-                const isValid = user.isPasssword(password)
+                const isValid = await user.isPassword(password)
                 if(!isValid){
                     const error = new UnAuthorisedError('password is incorrect')
                     return done(error)
                 }
                 
-                return done(null , user)
+                const token = user.CreateJwt()
+                return done(null , {user,token:token})
 
             } catch (error) {
                 done(error)
