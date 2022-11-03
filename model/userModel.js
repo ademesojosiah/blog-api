@@ -29,12 +29,12 @@ userModel.pre('save', async function(){
     this.password = await bcrypt.hash(this.password, salt)
 })
 
-userModel.methods.CreateJwt = async function(){
-   return jwt.sign({user_id: this._id, email: this.email},process.env.JWT_SECRET, {expiresIn:process.env.JWT_LIFETIME})
+userModel.methods.CreateJwt = function(){
+   return jwt.sign({user_id: this._id, email: this.email, fullname:`${this.first_name} ${this.last_name}`},process.env.JWT_SECRET, {expiresIn:process.env.JWT_LIFETIME})
 }
 
 userModel.methods.isPasssword = async function(newPassword){
-    const isPasssword = await bcrypt.comparePassword(newPassword,this.password)
+    const isPasssword = await bcrypt.compare(newPassword,this.password)
     return isPasssword
 }
 
