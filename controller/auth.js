@@ -4,4 +4,10 @@ const signup = (req,res)=>{
  }
 
 
- module.exports = { signup }
+const login = (req,res)=>{
+    const {user} = req
+    res.status(200).json({user})
+}
+
+
+ module.exports = { signup , login}
