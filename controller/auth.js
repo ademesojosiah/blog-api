@@ -1,12 +1,12 @@
 const signup = (req,res)=>{
     const {user,authInfo:{message}} = req
-    res.status(200).json({user, message})
+    res.status(201).json({user, message})
  }
 
 
 const login = (req,res)=>{
     const {user} = req
-    res.status(200).json({user})
+    res.status(201).json({user})
 }
 
 
