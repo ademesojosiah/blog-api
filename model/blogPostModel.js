@@ -16,8 +16,8 @@ const blogPostSchema = new mongoose.Schema({
     },
     state:{
         type:String,
-        enum:["draft","published"],
-        default: 'draft'
+        enum:["Draft","Published"],
+        default: 'Draft'
     },
     read_count:Number,
     reading_time: Number,

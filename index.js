@@ -8,17 +8,17 @@ const authRouter = require("./routes/userAuthRouter");
 const errorhandler = require("./middleware/erroHandler");
 const pageNotFound = require("./middleware/pageNotFound");
 const bodyParser = require("body-parser");
-const { blogRouter, generalblogRouter } = require("./routes/blogRouter");
+const { blogRouter, generalBlogRouter } = require("./routes/blogRouter");
 
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use("/auth", authRouter);
 
-app.use("/blog", generalblogRouter);
+app.use("/blog/all", generalBlogRouter);
 
 app.use(
-  "/blog/client",
+  "/blog/user",
   passport.authenticate("jwt", { session: false }),
   blogRouter
 );
