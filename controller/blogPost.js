@@ -18,31 +18,62 @@ const createBlog = async (req, res, next) => {
 
 const getPublishedBlogs = async (req, res, next) => {
   try {
-    const queryObject = {}
-    queryObject.state = 'Published'
-    const blogs = await blogPostModel.find(queryObject);
+    const { author, title,tag} = req.query
+    const queryObject = {
+      state : 'Published'
+    }
+
+    if(author){
+      queryObject.author = {$regex:author, $options:'i'}
+    }
+
+    if(title){
+      queryObject.title =  {$regex:title, $options:'i'}
+    }
+    
+
+    if(tag){
+      queryObject.tag =  {$regex:tag, $options:'i'}
+    }
+
+    let blogs = blogPostModel.find(queryObject);
+
+    const page = Number(req.query.page) || 1
+    const limit = Number(req.query.limit) || 20
+    const skip = (page-1) * limit
+
+    blogs = await blogs.skip(skip).limit(limit)
+
     res.status(200).json({ status: true, blogs });
   } catch (error) {
     next(error);
   }
 };
 
-const getAllBlogs = async(req,rees,next)=>{
-    try {
-        const blogs = await blogPostModel.find();
-        res.status(200).json({ status: true, blogs });
-      } catch (error) {
-        next(error);
-      }
-}
-
 const myBlogs = async (req, res, next) => {
-  try {
+  try { 
+    const { state:blogState} = req.query
     const { user_id } = req.user;
-    const blog = await blogPostModel.find({ createdBy: user_id });
+    const queryObject = {
+      createdBy: user_id,
+    }
+
+    if(blogState){
+      queryObject.state = blogState
+    }
+
+    let blog = blogPostModel.find(queryObject);
     if(!blog){
         throw new UnAuthorisedError(`no Blog post created yet`)
     }
+
+    const page = Number(req.query.page) || 1
+    const limit = Number(req.query.limit) || 2
+    const skip = (page - 1) * limit
+
+    blog = await blog.skip(skip).limit(limit)
+
+
     res.status(200).json({ status: true, blog });
   } catch (error) {
     next(error);
@@ -102,7 +133,6 @@ const deleteBlog = async (req, res, next) => {
 module.exports = {
   createBlog,
   singleBlog,
-  getAllBlogs,
   getPublishedBlogs,
   updateBlog,
   myBlogs,

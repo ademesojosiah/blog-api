@@ -18,7 +18,7 @@ app.use("/auth", authRouter);
 app.use("/blog/all", generalBlogRouter);
 
 app.use(
-  "/blog/user",
+  "/user/blog",
   passport.authenticate("jwt", { session: false }),
   blogRouter
 );
