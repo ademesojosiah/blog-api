@@ -32,9 +32,9 @@ describe("Auth: Signup", () => {
     expect(response.status).toBe(201);
     expect(response.body).toHaveProperty("message");
     expect(response.body).toHaveProperty("user");
-    expect(response.body.user.user).toHaveProperty("first_name", "valentina");
-    expect(response.body.user.user).toHaveProperty("last_name", "Augustine");
-    expect(response.body.user.user).toHaveProperty("email", "jojo@mail.com");
+    expect(response.body.user).toHaveProperty("first_name", "valentina");
+    expect(response.body.user).toHaveProperty("last_name", "Augustine");
+    expect(response.body.user).toHaveProperty("email", "jojo@mail.com");
   });
 
   it("should login a user", async () => {

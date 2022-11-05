@@ -20,10 +20,12 @@ const createBlog = async (req, res, next) => {
 
 const getPublishedBlogs = async (req, res, next) => {
   try {
-    const { author, title, tags } = req.query
+    const { author, title, tags ,order_by } = req.query
     const queryObject = {
       state : 'Published'
     }
+
+
 
     if(author){
       queryObject.author = {$regex: author, $options:'i'}
@@ -40,8 +42,13 @@ const getPublishedBlogs = async (req, res, next) => {
 
     let blogs =  blogPostModel.find(queryObject);
 
+    if(order_by){
+      const sortItem = order_by.split(',').join(' ') 
+      blogs = blogs.sort(sortItem)
+   }
+
     const page = Number(req.query.page) || 1
-    const limit = Number(req.query.limit) || 20
+    const limit = Number(req.query.per_page) || 20
     const skip = (page-1) * limit
 
     blogs = await blogs.skip(skip).limit(limit)
@@ -70,7 +77,7 @@ const myBlogs = async (req, res, next) => {
     }
 
     const page = Number(req.query.page) || 1
-    const limit = Number(req.query.limit) || 2
+    const limit = Number(req.query.per_page) || 5
     const skip = (page - 1) * limit
 
     blog = await blog.skip(skip).limit(limit)
