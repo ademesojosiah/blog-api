@@ -1,6 +1,5 @@
 const express = require("express");
 const app = express();
-const database = require("./db");
 require("dotenv").config();
 require("./middleware/passportAuth");
 const passport = require("passport");
@@ -24,15 +23,11 @@ app.use(
 );
 
 app.get("/", (req, res) => {
-  res.json({ status: true, message: "welcome to my blog" });
+  res.json({ status: true, message: "wellcome to my blog" });
 });
 
 app.use(pageNotFound);
 app.use(errorhandler);
 
-const PORT = process.env.PORT || 3334;
-database.connectDb();
+module.exports = app
 
-app.listen(PORT, () => {
-  console.log(`server connected succesfully to http://localhost:${PORT}`);
-});

@@ -20,25 +20,25 @@ const createBlog = async (req, res, next) => {
 
 const getPublishedBlogs = async (req, res, next) => {
   try {
-    const { author, title,tag} = req.query
+    const { author, title, tags } = req.query
     const queryObject = {
       state : 'Published'
     }
 
     if(author){
-      queryObject.author = {$regex:author, $options:'i'}
+      queryObject.author = {$regex: author, $options:'i'}
     }
 
     if(title){
-      queryObject.title =  {$regex:title, $options:'i'}
+      queryObject.title =  {$regex: title, $options:'i'}
     }
     
 
-    if(tag){
-      queryObject.tag =  {$regex:tag, $options:'i'}
+    if(tags){
+      queryObject.tags  =  {$regex: tags, $options:'i'}
     }
 
-    let blogs = blogPostModel.find(queryObject);
+    let blogs =  blogPostModel.find(queryObject);
 
     const page = Number(req.query.page) || 1
     const limit = Number(req.query.limit) || 20

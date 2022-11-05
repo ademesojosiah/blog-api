@@ -18,7 +18,7 @@ const errorhandler = (err,req,res,next) =>{
         customError.msg = `no id with ${err.value}`
         customError.statusCode = 400
     }
-        res.status(customError.statusCode).json({status:false, err: customError.msg})
+        res.status(customError.statusCode).json({status:false, message: customError.msg})
     }
 
 module.exports = errorhandler
