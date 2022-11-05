@@ -30,7 +30,7 @@ userModel.pre('save', async function(){
 })
 
 userModel.methods.CreateJwt = function(){
-   return jwt.sign({user_id: this._id, email: this.email, fullname:`${this.first_name} ${this.last_name}`},process.env.JWT_SECRET, {expiresIn:process.env.JWT_LIFETIME})
+   return jwt.sign({user_id: this._id, email: this.email, fullname:`${this.first_name} ${this.last_name}`},process.env.JWT_SECRET  || "secret", {expiresIn:process.env.JWT_LIFETIME || "0.041667d"})
 }
 
 userModel.methods.isPassword = async function(newPassword){
