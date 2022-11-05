@@ -138,8 +138,6 @@ Success
 
 - Route: /blog/all
 - Method: GET
-- Header:
-    - Authorization: Bearer {token}
 - Query params: 
     - page (default: 1)
     - per_page (default: 20)
@@ -162,8 +160,6 @@ Success
 
 - Route: /blog/all/:id
 - Method: GET
-- Header
-    - Authorization: Bearer {token}
 - Responses
 
 Success
