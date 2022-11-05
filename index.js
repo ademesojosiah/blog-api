@@ -23,7 +23,7 @@ app.use(
 );
 
 app.get("/", (req, res) => {
-  res.json({ status: true, message: "wellcome to my blog" });
+  res.json({ status: true, message: "welcome to my blog" });
 });
 
 app.use(pageNotFound);
