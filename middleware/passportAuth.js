@@ -31,9 +31,10 @@ passport.use(
             passwordField: 'password',
             passReqToCallback: true
         },
-        async (req, username, password, done) => {
+        async (req, email, password, done) => {
         try {
             const body = req.body
+            body.email = body.email.toLowerCase()
             const user = await userModel.create({ ...body });
             const token = user.CreateJwt()
             return done(null, {user,token:token}, {message: 'account succesfully created'});
@@ -53,6 +54,7 @@ passport.use(
         },
         async (email,password,done)=>{
             try {
+              if(email) email = email.toLowerCase()
                 const user = await userModel.findOne({email})
                 if(!user){
                     const error = new UnAuthorisedError('user not found')

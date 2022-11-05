@@ -21,7 +21,7 @@ blogRouter.route('/create').post(createBlog)
 
 blogRouter.route("/published").get(getPublishedBlogs);
 
-blogRouter.route("/published/:id").get(singleBlog)
+blogRouter.route("/published/:id").get(singleBlog).patch(updateBlog).delete(deleteBlog);
 
 blogRouter.route('/all').get(myBlogs)
 

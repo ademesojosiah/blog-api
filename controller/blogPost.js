@@ -7,9 +7,11 @@ const createBlog = async (req, res, next) => {
       user: { fullname, user_id },
       body,
     } = req;
-    body.author = fullname;
-    body.createdBy = user_id;
-    const blog = await blogPostModel.create({ ...body });
+    body.author = user_id ;
+    body.writtenBy = fullname;
+    body.read_count = 0
+    body.reading_time =  `${req.body.body.length / 250} minutes`
+    const blog = await blogPostModel.create({...body});
     res.status(200).json({ status: true, blog });
   } catch (error) {
     next(error);
@@ -83,8 +85,10 @@ const myBlogs = async (req, res, next) => {
 const singleBlog = async (req, res, next) => {
   const { id: blogId } = req.params;
   try {
-    const blog = await blogPostModel.findOne({ _id: blogId });
+    const blog = await blogPostModel.findOne({ _id: blogId,state:"Published" }).populate('author', '-password');
     if (!blog) throw new BadRequest(`no blog post with id:${blogId}`);
+    blog.read_count += 1;
+    await blog.save()
     res.status(200).json({ status: true, blog });
   } catch (error) {
     next(error);
