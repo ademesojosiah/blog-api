@@ -26,7 +26,9 @@ app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 
 
-app.use(cors())
+app.use(cors({
+  origin: '*'
+}))
 
 //sign up and sign in route
 app.use("/auth", authRouter);
