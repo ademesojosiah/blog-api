@@ -2,18 +2,33 @@ const express = require("express");
 const app = express();
 require("dotenv").config();
 require("./middleware/passportAuth");
+
+//import passport
 const passport = require("passport");
-const authRouter = require("./routes/userAuthRouter");
+
+// import errorhandler and pagenotfound controller
 const errorhandler = require("./middleware/erroHandler");
 const pageNotFound = require("./middleware/pageNotFound");
+
+
 const bodyParser = require("body-parser");
+
+
+// import routers 
+const authRouter = require("./routes/userAuthRouter");
 const { blogRouter, generalBlogRouter } = require("./routes/blogRouter");
 
+
+// initiate body parser
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 
+
+//sign up and sign in route
 app.use("/auth", authRouter);
 
+
+// not login in user route
 app.use("/blog/all", generalBlogRouter);
 
 app.use(
@@ -22,10 +37,13 @@ app.use(
   blogRouter
 );
 
+
 app.get("/", (req, res) => {
   res.json({ status: true, message: "welcome to my blog" });
 });
 
+
+//initiated the page not found and errorHandler
 app.use(pageNotFound);
 app.use(errorhandler);
 
