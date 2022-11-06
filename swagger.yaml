@@ -152,6 +152,8 @@ paths:
           description: ''
           headers: {}
       deprecated: false
+      security:
+      - bearer: []
       servers:
       - url: https://blog-api-5ecs.onrender.com
         variables: {}
@@ -167,6 +169,8 @@ paths:
           description: ''
           headers: {}
       deprecated: false
+      security:
+      - bearer: []
       servers:
       - url: https://blog-api-5ecs.onrender.com
         variables: {}
@@ -182,15 +186,17 @@ paths:
           description: ''
           headers: {}
       deprecated: false
+      security:
+      - bearer: []
       servers:
       - url: https://blog-api-5ecs.onrender.com
         variables: {}
-  /users/{id}:
+  /user/blog/all/{id}:
     parameters:
       - in: path
         name: id
         schema:
-          type: integer
+          type: string
         required: true
         description: The user ID.
     get:
