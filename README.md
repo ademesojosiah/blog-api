@@ -35,7 +35,7 @@ This is an api for a Blog app
 
 ---
 ## Base URL
-- somehostsite.com
+- blog-api-5ecs.onrender.com
 
 
 ## Models
