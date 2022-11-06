@@ -7,8 +7,8 @@ const signup = (req, res) => {
 };
 
 const login = (req, res) => {
-  const { user } = req;
-  res.status(201).json({ user , message: 'Login successful'});
+  const { user:{ user , token} } = req;
+  res.status(201).json({ user , token, message: 'Login successful'});
 };
 
 module.exports = { signup, login };
