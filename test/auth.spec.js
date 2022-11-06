@@ -56,6 +56,6 @@ describe("Auth: Signup", () => {
       });
 
     expect(response.status).toBe(201);
-    expect(response.body.user).toHaveProperty("token");
+    expect(response.body).toHaveProperty("token");
   });
 });

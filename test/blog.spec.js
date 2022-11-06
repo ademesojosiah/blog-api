@@ -26,7 +26,7 @@ describe('Blog Route', () => {
             email: 'jojo@gmail.com'
         });
 
-        token = loginResponse.body.user.user.token;
+        token = loginResponse.body.user.token;
     })
 
     afterEach(async () => {
