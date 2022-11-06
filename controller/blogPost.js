@@ -28,7 +28,7 @@ const getPublishedBlogs = async (req, res, next) => {
 
 
     if(author){
-      queryObject.author = {$regex: author, $options:'i'}
+      queryObject.writtenBy = {$regex: author, $options:'i'}
     }
 
     if(title){
