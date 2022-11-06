@@ -18,11 +18,15 @@ const bodyParser = require("body-parser");
 const authRouter = require("./routes/userAuthRouter");
 const { blogRouter, generalBlogRouter } = require("./routes/blogRouter");
 
+// import cors
+const cors = require('cors')
 
 // initiate body parser
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 
+
+app.use(cors())
 
 //sign up and sign in route
 app.use("/auth", authRouter);
