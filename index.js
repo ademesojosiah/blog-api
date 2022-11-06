@@ -28,8 +28,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/auth", authRouter);
 
 
-// not login in user route
+// not logged  in user route
 app.use("/blog/all", generalBlogRouter);
+
+// logged in user
 
 app.use(
   "/user/blog",
@@ -38,6 +40,7 @@ app.use(
 );
 
 
+// home page
 app.get("/", (req, res) => {
   res.json({ status: true, message: "welcome to my blog" });
 });
