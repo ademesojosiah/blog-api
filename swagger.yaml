@@ -28,16 +28,12 @@ paths:
               properties:
                 first_name:
                   type: string
-                  example: yomi
                 last_name:
                   type: string
-                  example: ogunseye
                 email:
                   type: string
-                  example: ogunseye@gmail.com
                 password:
                   type: string
-                  example: secret
         required: false
       responses:
         '200':
@@ -67,10 +63,10 @@ paths:
               properties:
                 email:
                   type: string
-                  example: ogunseye@gmail.com
+                  example: example@gmail.com
                 password:
                   type: string
-                  example: secret
+                  example: password
         required: false
       responses:
         '200':
@@ -82,6 +78,37 @@ paths:
       - url: https://blog-api-5ecs.onrender.com
         variables: {}
   /blog/all:
+    parameters:
+      - in: query
+        name: page
+        schema:
+          type: integer
+        description: The page number to return
+      - in: query
+        name: per_page
+        schema:
+          type: integer
+        description: The numbers of blogs per page  to return
+      - in: query
+        name: order_by
+        schema:
+          type: string
+        description: sort blogs by either(asc) or (-desc)?
+      - in: query
+        name: author
+        schema:
+          type: string
+        description: search blogs by author
+      - in: query
+        name: title
+        schema:
+          type: string
+        description: search blogs by title
+      - in: query
+        name: tags
+        schema:
+          type: string
+        description: search blogs by tags
     get:
       tags:
       - Not logged in users
@@ -158,6 +185,38 @@ paths:
       - url: https://blog-api-5ecs.onrender.com
         variables: {}
   /user/blog/published:
+    parameters:
+      - in: query
+        name: page
+        schema:
+          type: integer
+        description: The page number to return
+      - in: query
+        name: per_page
+        schema:
+          type: integer
+        description: The numbers of blogs per page  to return
+      - in: query
+        name: order_by
+        schema:
+          type: string
+          default: -read_count
+        description: sort blogs by either(asc) or (-desc)?
+      - in: query
+        name: author
+        schema:
+          type: string
+        description: search blogs by author
+      - in: query
+        name: title
+        schema:
+          type: string
+        description: search blogs by title
+      - in: query
+        name: tags
+        schema:
+          type: string
+        description: search blogs by tags  
     get:
       tags:
       - logged in users
@@ -175,6 +234,24 @@ paths:
       - url: https://blog-api-5ecs.onrender.com
         variables: {}
   /user/blog/all:
+    parameters:
+      - in: query
+        name: page
+        schema:
+          type: integer
+          default: 1
+        description: The page number to return
+      - in: query
+        name: per_page
+        schema:
+          type: integer
+          default: 5
+        description: The numbers of blogs per page  to return
+      - in: query
+        name: state
+        schema:
+          type: string
+        description: search state (Draft, Published)
     get:
       tags:
       - logged in users
