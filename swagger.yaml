@@ -1,0 +1,318 @@
+openapi: 3.0.0
+info:
+  title: BLOG_API
+  contact: {}
+  version: '1.0'
+servers:
+- url: https://blog-api-5ecs.onrender.com
+  variables: {}
+paths:
+  /auth/signup:
+    post:
+      tags:
+      - Auth
+      summary: sign up user
+      operationId: signupuser
+      parameters: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            encoding: {}
+            schema:
+              required:
+              - first_name
+              - last_name
+              - email
+              - password
+              type: object
+              properties:
+                first_name:
+                  type: string
+                  example: yomi
+                last_name:
+                  type: string
+                  example: ogunseye
+                email:
+                  type: string
+                  example: ogunseye@gmail.com
+                password:
+                  type: string
+                  example: secret
+        required: false
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+      servers:
+      - url: https://blog-api-5ecs.onrender.com
+        variables: {}
+  /auth/login:
+    post:
+      tags:
+      - Auth
+      summary: login user
+      operationId: loginuser
+      parameters: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            encoding: {}
+            schema:
+              required:
+              - email
+              - password
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: ogunseye@gmail.com
+                password:
+                  type: string
+                  example: secret
+        required: false
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+      servers:
+      - url: https://blog-api-5ecs.onrender.com
+        variables: {}
+  /blog/all:
+    get:
+      tags:
+      - Not logged in users
+      summary: get all published blog
+      operationId: getallpublishedblog
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+      servers:
+      - url: https://blog-api-5ecs.onrender.com
+        variables: {}
+  /blog/all/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: The blog ID.
+    get:
+      tags:
+      - Not logged in users
+      summary: get a published blog
+      operationId: getapublishedblog
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+      servers:
+      - url: https://blog-api-5ecs.onrender.com
+        variables: {}
+  /user/blog/create:
+    post:
+      tags:
+      - logged in users
+      summary: create a blog
+      operationId: createablog
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/createablogrequest'
+              - example:
+                  title: intro in backend
+                  description: not much to say
+                  state: Published
+                  tags: sense
+                  body: omo, i have nothing to say to you do your worse
+            example:
+              title: intro in backend
+              description: not much to say
+              state: Published
+              tags: sense
+              body: omo, i have nothing to say to you do your worse
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      servers:
+      - url: https://blog-api-5ecs.onrender.com
+        variables: {}
+  /user/blog/published:
+    get:
+      tags:
+      - logged in users
+      summary: get all published blog (logged in user)
+      operationId: getallpublishedblog(loggedinuser)
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      servers:
+      - url: https://blog-api-5ecs.onrender.com
+        variables: {}
+  /user/blog/all:
+    get:
+      tags:
+      - logged in users
+      summary: get all my blogs
+      operationId: getallmyblogs
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      servers:
+      - url: https://blog-api-5ecs.onrender.com
+        variables: {}
+  /users/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+        description: The user ID.
+    get:
+      tags:
+      - logged in users
+      summary: get a blog from my blogs
+      operationId: getablogfrommyblogs
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+      servers:
+      - url: https://blog-api-5ecs.onrender.com
+        variables: {}
+    patch:
+      tags:
+      - logged in users
+      summary: update a blog on my blogs
+      operationId: updateablogonmyblogs
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/updateablogonmyblogsrequest'
+              - example:
+                  read_count: 4
+            example:
+              read_count: 4
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+      servers:
+      - url: https://blog-api-5ecs.onrender.com
+        variables: {}
+
+    delete:
+      tags:
+      - logged in users
+      summary: delete a blog
+      operationId: deleteablog
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+      servers:
+      - url: https://blog-api-5ecs.onrender.com
+        variables: {}
+components:
+  schemas:
+    createablogrequest:
+      title: createablogrequest
+      required:
+      - title
+      - description
+      - state
+      - tags
+      - body
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        state:
+          type: string
+        tags:
+          type: string
+        body:
+          type: string
+      example:
+        title: intro in backend
+        description: not much to say
+        state: Published
+        tags: sense
+        body: omo, i have nothing to say to you do your worse
+    updateablogonmyblogsrequest:
+      title: updateablogonmyblogsrequest
+      required:
+      - read_count
+      type: object
+      properties:
+        read_count:
+          type: integer
+          format: int32
+      example:
+        read_count: 4
+    deleteablogrequest:
+      title: deleteablogrequest
+      required:
+      - read_count
+      type: object
+      properties:
+        read_count:
+          type: integer
+          format: int32
+      example:
+        read_count: 4
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+security: []
+tags:
+- name: Auth
+  description: ''
+- name: Not logged in users
+  description: ''
+- name: logged in users
+  description: ''

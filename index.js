@@ -6,6 +6,15 @@ require("./middleware/passportAuth");
 //import passport
 const passport = require("passport");
 
+
+// import swagger
+const swaggerUI = require('swagger-ui-express')
+
+const YAML = require('yamljs')
+
+const swaggerDocument = YAML.load('./swagger.yaml')
+
+
 // import errorhandler and pagenotfound controller
 const errorhandler = require("./middleware/erroHandler");
 const pageNotFound = require("./middleware/pageNotFound");
@@ -26,9 +35,7 @@ app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 
 
-app.use(cors({
-  origin: '*'
-}))
+app.use(cors())
 
 //sign up and sign in route
 app.use("/auth", authRouter);
@@ -48,8 +55,11 @@ app.use(
 
 // home page
 app.get("/", (req, res) => {
-  res.json({ status: true, message: "welcome to my blog" });
+  res.send('<h1>Blog API</h1><a href="/api-docs">Documentation</a>')
 });
+
+//documentaion page
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
 
 
 //initiated the page not found and errorHandler
