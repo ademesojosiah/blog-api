@@ -64,7 +64,7 @@ const myBlogs = async (req, res, next) => {
     const { state:blogState} = req.query
     const { user_id } = req.user;
     const queryObject = {
-      createdBy: user_id,
+      author: user_id,
     }
 
     if(blogState){
@@ -83,7 +83,7 @@ const myBlogs = async (req, res, next) => {
     blog = await blog.skip(skip).limit(limit)
 
 
-    res.status(200).json({ status: true, blog });
+    res.status(200).json({ status: true, blog , });
   } catch (error) {
     next(error);
   }
