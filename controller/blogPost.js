@@ -83,7 +83,7 @@ const myBlogs = async (req, res, next) => {
     blog = await blog.skip(skip).limit(limit)
 
 
-    res.status(200).json({ status: true, blog , });
+    res.status(200).json({ status: true, blog });
   } catch (error) {
     next(error);
   }
