@@ -1,34 +1,31 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
-
-const blogPostSchema = new mongoose.Schema({
-    title:{type:String,
-    required:[ true, "title is required"],
-    unique:[true,' this title has already taken']
+const blogPostSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: [true, "title is required"],
+      unique: [true, " this title has already taken"],
     },
-    description:String,
-    author:{type:mongoose.Types.ObjectId,
-        ref:'User'
+    description: String,
+    author: { type: mongoose.Types.ObjectId, ref: "User" },
+    writtenBy: {
+      type: String,
     },
-    writtenBy:{
-        type:String
+    state: {
+      type: String,
+      enum: ["Draft", "Published"],
+      default: "Draft",
     },
-    state:{
-        type:String,
-        enum:["Draft","Published"],
-        default: 'Draft'
-    },
-    read_count:Number,
+    read_count: Number,
     reading_time: String,
     tags: String,
-    body:{
-        type:String, 
-        required:[ true,"Please the body is required"]
-    }
+    body: {
+      type: String,
+      required: [true, "Please the body is required"],
+    },
+  },
+  { timestamps: true }
+);
 
- }, { timestamps: true})
-
-
-
-module.exports = mongoose.model('BlogPost',blogPostSchema)
-
+module.exports = mongoose.model("BlogPost", blogPostSchema);
