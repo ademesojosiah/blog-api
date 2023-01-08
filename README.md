@@ -24,6 +24,15 @@ This is an api for a Blog app
 17. It is also orderable by read_count, reading_time and timestamp
 18. When a single blog is requested, the api should return the user information(the author) with the blog. The read_count of the blog too should be updated by 1
 
+---
+
+## Security
+- joi input validation
+- helmet security
+- express rate limiter
+- Good logging
+
+---
 
 ---
 
@@ -74,7 +83,7 @@ This is an api for a Blog app
     "first_name": "eri",
     "last_name": "Ogunseye",
     "email": "eri@gmail.com",
-    "password": "secret",
+    "password": "secret"
 }
 ```
 
@@ -106,7 +115,7 @@ Success
 ```
 {
   "email": "eri@gmail.com",
-  "password": "secrett",
+  "password": "secrett"
 }
 ```
 
