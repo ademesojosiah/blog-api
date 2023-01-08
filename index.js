@@ -1,7 +1,12 @@
 const express = require("express");
 const app = express();
+const helmet = require('helmet')
 require("dotenv").config();
 require("./middleware/passportAuth");
+
+
+//import rate limit
+const rateLimit = require('express-rate-limit')
 
 //import passport
 const passport = require("passport");
@@ -29,6 +34,19 @@ const { blogRouter, generalBlogRouter } = require("./routes/blogRouter");
 
 // import cors
 const cors = require('cors')
+
+const limiter = rateLimit({
+	windowMs: 15 * 60 * 1000, // 15 minutes
+	max: 50, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+})
+
+
+app.use(limiter)
+
+//security middleware
+app.use(helmet())
 
 // initiate body parser
 app.use(bodyParser.json());
